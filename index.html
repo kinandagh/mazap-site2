@@ -11,7 +11,7 @@
       color: #dcdcdc;
       text-align: center;
       direction: rtl;
-      padding: 50px 20px;
+      padding: 20px;
       position: relative;
     }
 
@@ -30,9 +30,22 @@
       z-index: 0;
     }
 
+    .top-image {
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .top-image img {
+      max-width: 50%;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+
     h1 {
       color: #4C7EFF;
-      margin-bottom: 50px;
+      margin-bottom: 30px;
       position: relative;
       z-index: 1;
       font-size: 50px;
@@ -80,9 +93,9 @@
     }
 
     .description {
-      margin-top: 90px;
+      margin-top: 50px;
       color: #89a3ff;
-      font-size: 50px;
+      font-size: 36px;
       position: relative;
       z-index: 1;
     }
@@ -92,23 +105,14 @@
       font-size: 15px;
       color: #ccc;
     }
-
-    .image-container {
-      margin-top: 50px;
-      margin-bottom: 80px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .image-container img {
-      max-width: 70%;
-      height: auto;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-    }
   </style>
 </head>
 <body>
+
+  <!-- התמונה בראש הדף -->
+  <div class="top-image">
+    <img src="banner.jpg" alt="קורס ערבית מזו״פ" />
+  </div>
 
   <h1>בוא להצטרף למשטרת ישראל.</h1>
 
@@ -129,11 +133,6 @@
 
   <div class="description">
     בוא לחשוף את האמת – קריירה במשטרה שמובילה קדימה
-  </div>
-
-  <!-- תמונה בתחתית הדף, שניתן לגלול אליה -->
-  <div class="image-container">
-    <img src="banner.jpg" alt="קורס ערבית מזו״פ" />
   </div>
 
   <script>
@@ -199,10 +198,6 @@
       reader.readAsDataURL(file);
     });
   </script>
-
-</body>
-</html>
-
 
 </body>
 </html>
