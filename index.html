@@ -122,9 +122,14 @@
       <input type="tel" name="טלפון" placeholder="מספר נייד" required>
       <input type="number" name="גיל" placeholder="גיל" required>
 
-      <input type="file" id="cvInput" name="cvfile" accept=".pdf,.doc,.docx" style="display: none;">
-      <label for="cvInput"><div class="btn-secondary">הוספת קורות חיים</div></label>
-      <div id="fileNameDisplay" style="color: #aaa; font-size: 14px; margin-top: 8px;"></div>
+<input type="file" id="cvInput" name="cvfile" accept=".pdf,.doc,.docx" style="display: none;">
+<label for="cvInput">
+  <div class="btn-secondary">
+    הוספת קורות חיים <span style="font-size: 14px; color: #ccc;">(לא חובה)</span>
+  </div>
+</label>
+<div id="fileNameDisplay" style="color: #aaa; font-size: 14px; margin-top: 8px;"></div>
+
 
       <button class="btn-primary" type="submit">אני רוצה להצטרף</button>
     </form>
@@ -148,25 +153,33 @@
     }
   });
 
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
+ form.addEventListener('submit', async function (e) {
+  e.preventDefault();
 
-    submitButton.disabled = true;
-    submitButton.textContent = "שולח...";
+  submitButton.disabled = true;
+  submitButton.textContent = "שולח...";
 
-    const file = input.files[0];
-    const formData = new FormData();
-    formData.append('שם מלא', form['שם מלא'].value);
-    formData.append('אימייל', form['אימייל'].value);
-    formData.append('טלפון', form['טלפון'].value);
-    formData.append('גיל', form['גיל'].value);
+  const file = input.files[0];
+  const data = new URLSearchParams();
+  data.append('שם מלא', form['שם מלא'].value);
+  data.append('אימייל', form['אימייל'].value);
+  data.append('טלפון', form['טלפון'].value);
+  data.append('גיל', form['גיל'].value);
 
-    if (file && file.size > 0) {
-      formData.append('cvfile', file); // שליחה ישירה, לא כ-base64
-    }
+  if (file && file.size > 0) {
+    const reader = new FileReader();
+    reader.onload = async function () {
+      const base64 = reader.result.split(',')[1];
+      data.append('קובץ_base64', base64);
+      data.append('קובץ_name', file.name);
+      await sendForm(data);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    await sendForm(data);
+  }
+});
 
-    await sendForm(formData);
-  });
 
   async function sendForm(data) {
     try {
